@@ -1,16 +1,7 @@
-# Basic Sample Hardhat Project
+# Plussies!
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Show your appreciation by 1-upping with a plussy!
 
-Try running some of the following tasks:
+Associates recent content by wallet, and keeps account of associated plussies.
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
-# plussies
+You can plussy a user every 3 days. 
