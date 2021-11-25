@@ -22,26 +22,30 @@ contract Plussy {
     console.log("we'd applaud a new life");
   }
 
-  function updateContent(string content) public {
+  function updateContent(string calldata content) public {
     userCurrentContent[msg.sender] = content;
   }
 
-  function getContentByAddress(address artOwner) public view returns (string) {
+  function getContentByAddress(address artOwner) public view returns (string memory) {
     return userCurrentContent[artOwner]; 
   }
 
+  error PlussyTooSoon(uint);
 
   function plusSomething(address content) public {
-    uint threeDaysPrevious = now - (60 * 60 * 24 * 3);
-    uint timeUntil = userConstraints[msg.sender].lastPlussed - threeDaysPrevious;
-    require(userConstraints[msg.sender].lastPlussed > threeDaysPrevious, timeUntil + " until you can next plus.");
+    uint threeDaysPrevious = block.timestamp - (60 * 60 * 24 * 3);
+    if (userConstraints[msg.sender].lastPlussed > threeDaysPrevious) {
+      uint timeUntil = userConstraints[msg.sender].lastPlussed - threeDaysPrevious;
+      revert PlussyTooSoon(timeUntil);
+    }
+
     require(content != msg.sender, "Can't plus yourself ;)");
 
-     userPlusCount[content] += 1; 
-     userConstraints[msg.sender].lastPlussed = now;
+    userPlusCount[content] += 1; 
+    userConstraints[msg.sender].lastPlussed = block.timestamp;
   }
 
-  function getUserPlussies(address artOwner) public view returns (string) {
+  function getUserPlussies(address artOwner) public view returns (uint) {
     return userPlusCount[artOwner];
   }
 }
